@@ -297,12 +297,12 @@ df2 %&gt;%
 <p>1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5</p>
 <p>1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4</p>
 <p><strong>Respuesta:</strong> Creo los vectores:</p>
-<pre class="r"><code>(v1 &lt;- sort(rep(seq(4:1), each = 4),decreasing = T))</code></pre>
+<pre class="r"><code>(v1 &lt;- rep(seq(4,1), each = 4))</code></pre>
 <pre><code>##  [1] 4 4 4 4 3 3 3 3 2 2 2 2 1 1 1 1</code></pre>
-<pre class="r"><code>(v2 &lt;- rep(seq(1:5), times = 1:5))</code></pre>
+<pre class="r"><code>(v2 &lt;- rep(seq(1,5), times = 1:5))</code></pre>
 <pre><code>##  [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5</code></pre>
-<pre class="r"><code>(v3 &lt;- rep(seq(4:1), times = 4))</code></pre>
-<pre><code>##  [1] 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4</code></pre>
+<pre class="r"><code>(v3 &lt;- rep(seq(4,1), times = 4))</code></pre>
+<pre><code>##  [1] 4 3 2 1 4 3 2 1 4 3 2 1 4 3 2 1</code></pre>
 </div>
 <div id="ejercicio-4." class="section level1">
 <h1>Ejercicio 4.</h1>

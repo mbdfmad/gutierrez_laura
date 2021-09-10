@@ -131,9 +131,9 @@ elementos respectivamente:
 **Respuesta:**
 Creo los vectores:
 ```{r}
-(v1 <- sort(rep(seq(4:1), each = 4),decreasing = T))
-(v2 <- rep(seq(1:5), times = 1:5))
-(v3 <- rep(seq(4:1), times = 4))
+(v1 <- rep(seq(4,1), each = 4))
+(v2 <- rep(seq(1,5), times = 1:5))
+(v3 <- rep(seq(4,1), times = 4))
 ```
 # Ejercicio 4.
 
