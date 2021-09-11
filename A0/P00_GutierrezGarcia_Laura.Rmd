@@ -1,11 +1,11 @@
 ---
 title: "Práctica 0. FMAD 2021-2022"
-author: "Gutiérrez, Laura"
+author: "Gutiérrez García, Laura"
 date: 'Curso 2021-22. Última actualización: `r format(Sys.time(), "%Y-%m-%d")`'
 output:
   word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
 subtitle: ICAI. Master en Big Data. Fundamentos Matemáticos del Análisis de Datos
   (FMAD).
 ---
@@ -91,7 +91,7 @@ tablas de frecuencias absolutas y relativas de este segundo vector.
 Creo el vector:
 ```{r}
 set.seed(2021)
-(dado_cargado <- sample(1:6,100, replace = T, prob = c(rep(1/7,5), 2/7)))
+(dado_cargado <- sample(1:6,100, replace = T, prob = rep( c(1/7,2/7),c(5,1))))
 ```
 Tabla de frecuencias absolutas
 ```{r}
@@ -203,16 +203,19 @@ census %>%
   arrange(across(pop,desc))
   
 ```
-Crea una nueva variable que contenga la tasa de divorcios /matrimonios para cada estado.
+Crea una nueva variable que contenga la tasa de divorcios /matrimonios para cada estado y después muestro la tasa por estado.
 
 ```{r}
 census <- census %>% 
-  mutate(tasa= divorce/marriage)
+  mutate(tasa= divorce/marriage) 
 
-# Muestro el dataframe (exluyendo las 4 primeras columnas para que se vea la variable creada)
-census[1:6,-(1:4)]
+census %>% 
+  select(state,tasa)
+
 ```
 Si nos preguntamos cuáles son los estados más envejecidos podemos responder de dos maneras. Mirando la edad mediana o mirando en qué estados la franja de mayor edad representa una proporción más alta de la población total. Haz una tabla en la que aparezcan los valores de estos dos criterios, ordenada según la edad mediana decreciente y muestra los 10 primeros estados de esa tabla.
+
+En primer lugar, calculamos la proporción y la guardamos como variable. Posteriormente, seleccionamos las columnas de interés (estado, edad mediana y proporción) y las mostramos según el orden descendente para la variable de la edad mediana:
 
 ```{r}
 census %>% 

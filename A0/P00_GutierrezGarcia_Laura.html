@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Gutiérrez, Laura" />
+<meta name="author" content="Gutiérrez García, Laura" />
 
 
 <title>Práctica 0. FMAD 2021-2022</title>
@@ -166,7 +166,7 @@ pre code {
 
 <h1 class="title toc-ignore">Práctica 0. FMAD 2021-2022</h1>
 <h3 class="subtitle">ICAI. Master en Big Data. Fundamentos Matemáticos del Análisis de Datos (FMAD).</h3>
-<h4 class="author">Gutiérrez, Laura</h4>
+<h4 class="author">Gutiérrez García, Laura</h4>
 <h4 class="date">Curso 2021-22. Última actualización: 2021-09-11</h4>
 
 </div>
@@ -243,7 +243,7 @@ df %&gt;%
 <p><strong>Enunciado:</strong> A continuación crea un nuevo vector dado_cargado de manera que la probabilidad de que el número elegido valga 6 sea el doble que la probabilidad de elegir cualquiera de los cinco números restantes. Lee la ayuda de sample si lo necesitas. De nuevo, haz tablas de frecuencias absolutas y relativas de este segundo vector.</p>
 <p><strong>Respuesta:</strong> Creo el vector:</p>
 <pre class="r"><code>set.seed(2021)
-(dado_cargado &lt;- sample(1:6,100, replace = T, prob = c(rep(1/7,5), 2/7)))</code></pre>
+(dado_cargado &lt;- sample(1:6,100, replace = T, prob = rep( c(1/7,2/7),c(5,1))))</code></pre>
 <pre><code>##   [1] 4 2 5 3 5 5 5 6 2 1 6 2 5 4 2 6 4 1 1 4 6 1 3 6 5 1 1 1 1 2 6 1 1 1 4 6 1
 ##  [38] 6 1 4 6 2 3 1 6 2 1 6 6 2 4 5 6 4 3 6 4 3 1 2 6 4 6 3 2 6 6 5 6 6 6 5 6 1
 ##  [75] 6 4 4 3 5 1 4 3 1 5 3 6 1 2 4 3 6 5 1 4 6 1 5 2 2 5</code></pre>
@@ -383,22 +383,28 @@ census %&gt;%
 ##  9 New Jersey    7364823
 ## 10 N. Carolina   5881766
 ## # ... with 40 more rows</code></pre>
-<p>Crea una nueva variable que contenga la tasa de divorcios /matrimonios para cada estado.</p>
+<p>Crea una nueva variable que contenga la tasa de divorcios /matrimonios para cada estado y después muestro la tasa por estado.</p>
 <pre class="r"><code>census &lt;- census %&gt;% 
-  mutate(tasa= divorce/marriage)
+  mutate(tasa= divorce/marriage) 
 
-# Muestro el dataframe (exluyendo las 4 primeras columnas para que se vea la variable creada)
-census[1:6,-(1:4)]</code></pre>
-<pre><code>## # A tibble: 6 x 9
-##   pop5_17   pop18p  pop65p popurban medage  death marriage divorce  tasa
-##     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-## 1  865836  2731640  440015  2337713   29.3  35305    49018   26745 0.546
-## 2   91796   271106   11547   258567   26.1   1604     5361    3517 0.656
-## 3  577604  1926728  307362  2278728   29.2  21226    30223   19908 0.659
-## 4  495782  1615061  312477  1179556   30.6  22676    26513   15882 0.599
-## 5 4680558 17278944 2414250 21607606   29.9 186428   210864  133541 0.633
-## 6  592318  2081151  247325  2329869   28.6  18925    34917   18571 0.532</code></pre>
+census %&gt;% 
+  select(state,tasa)</code></pre>
+<pre><code>## # A tibble: 50 x 2
+##    state        tasa
+##    &lt;chr&gt;       &lt;dbl&gt;
+##  1 Alabama     0.546
+##  2 Alaska      0.656
+##  3 Arizona     0.659
+##  4 Arkansas    0.599
+##  5 California  0.633
+##  6 Colorado    0.532
+##  7 Connecticut 0.518
+##  8 Delaware    0.521
+##  9 Florida     0.661
+## 10 Georgia     0.492
+## # ... with 40 more rows</code></pre>
 <p>Si nos preguntamos cuáles son los estados más envejecidos podemos responder de dos maneras. Mirando la edad mediana o mirando en qué estados la franja de mayor edad representa una proporción más alta de la población total. Haz una tabla en la que aparezcan los valores de estos dos criterios, ordenada según la edad mediana decreciente y muestra los 10 primeros estados de esa tabla.</p>
+<p>En primer lugar, calculamos la proporción y la guardamos como variable. Posteriormente, seleccionamos las columnas de interés (estado, edad mediana y proporción) y las mostramos según el orden descendente para la variable de la edad mediana:</p>
 <pre class="r"><code>census %&gt;% 
   mutate(prop65= pop65p/pop) %&gt;% 
   select(state,medage,prop65) %&gt;% 
