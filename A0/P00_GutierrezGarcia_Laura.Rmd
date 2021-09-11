@@ -4,8 +4,8 @@ author: "Gutiérrez, Laura"
 date: 'Curso 2021-22. Última actualización: `r format(Sys.time(), "%Y-%m-%d")`'
 output:
   word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
 subtitle: ICAI. Master en Big Data. Fundamentos Matemáticos del Análisis de Datos
   (FMAD).
 ---
@@ -58,7 +58,7 @@ set.seed(2021)
 (dado_honesto <- sample(1:6,100, replace = T))
 ```
 Tabla de frecuencias absolutas
-```{r}
+```{r, message=FALSE}
 table(dado_honesto)
 
 library(dplyr)
@@ -97,7 +97,6 @@ Tabla de frecuencias absolutas
 ```{r}
 table(dado_cargado)
 
-library(dplyr)
 # Creo el dataframe para poder trabajar con dplyr
 df2 <- data.frame(c(1:length(dado_cargado)),dado_cargado)
 names(df) <- c("Tirada","dado_cargado")
@@ -138,13 +137,15 @@ Creo los vectores:
 # Ejercicio 4.
 
 **Enunciado:** Utilizando la tabla mpg de la librería tidyverse crea una tabla mpg2 que:
+
 I) contenga las filas en las que la variable class toma el valor pickup.
+
 II) y las columnas de la tabla original cuyos nombres empiezan por c. No se trata de que las
 selecciones a mano, por sus nombres
 
 **Respuesta:**
 Hago la selección:
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 mpg %>% 
   filter(class == "pickup") %>% 
@@ -194,7 +195,7 @@ Ordena los estados por población, de mayor a menor.
 
 ```{r}
 # Con R
-census$state[order(census$pop)]
+census$state[order(census$pop,decreasing = TRUE)]
 
 # Con dplyr
 census %>% 
@@ -208,8 +209,8 @@ Crea una nueva variable que contenga la tasa de divorcios /matrimonios para cada
 census <- census %>% 
   mutate(tasa= divorce/marriage)
 
-# Muestro el dataframe
-head(census)
+# Muestro el dataframe (exluyendo las 4 primeras columnas para que se vea la variable creada)
+census[1:6,-(1:4)]
 ```
 Si nos preguntamos cuáles son los estados más envejecidos podemos responder de dos maneras. Mirando la edad mediana o mirando en qué estados la franja de mayor edad representa una proporción más alta de la población total. Haz una tabla en la que aparezcan los valores de estos dos criterios, ordenada según la edad mediana decreciente y muestra los 10 primeros estados de esa tabla.
 
