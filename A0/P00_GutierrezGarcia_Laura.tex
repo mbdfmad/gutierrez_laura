@@ -1,0 +1,658 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Práctica 0. FMAD 2021-2022},
+  pdfauthor={Gutiérrez García, Laura},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Práctica 0. FMAD 2021-2022}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{ICAI. Master en Big Data. Fundamentos Matemáticos del Análisis
+de Datos (FMAD).}
+\author{Gutiérrez García, Laura}
+\date{Curso 2021-22. Última actualización: 2021-09-14}
+
+\begin{document}
+\maketitle
+
+\hypertarget{ejercicio-0-ejemplo.}{%
+\section{Ejercicio 0 (ejemplo).}\label{ejercicio-0-ejemplo.}}
+
+\textbf{Enunciado:} Usa la función \texttt{seq} de R para fabricar un
+vector \texttt{v} con los múltiplos de 3 del 0 al 300. Muestra los
+primeros 20 elementos de \texttt{v} usando \texttt{head} y calcula:
+
+\begin{itemize}
+\tightlist
+\item
+  la suma del vector \texttt{v},
+\item
+  su media,
+\item
+  y su longitud.
+\end{itemize}
+
+\textbf{Respuesta:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v }\OtherTok{=} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{300}\NormalTok{, }\AttributeTok{by =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(v, }\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  0  3  6  9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57
+\end{verbatim}
+
+Suma de \texttt{v}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(v)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15150
+\end{verbatim}
+
+Media:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(v)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 150
+\end{verbatim}
+
+Longitud:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(v)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 101
+\end{verbatim}
+
+\hypertarget{libreruxedas}{%
+\section{Librerías}\label{libreruxedas}}
+
+Antes de comenzar con la práctica, cargamos todas las librerías
+necesarias:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# Uso de dplyr y ggplot}
+\FunctionTok{library}\NormalTok{(haven) }\CommentTok{\# Lectura de datos desde stata}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ejercicio-1.}{%
+\section{Ejercicio 1.}\label{ejercicio-1.}}
+
+\textbf{Enunciado:} Usando la función sample crea un vector
+dado\_honesto con 100 números del 1 al 6. Haz una tabla de frecuencias
+absolutas (de dos maneras, con table y dplyr) y una tabla de frecuencias
+relativas.
+
+\textbf{Respuesta:} Creo el vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2021}\NormalTok{)}
+\NormalTok{(dado\_honesto }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{,}\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 6 6 2 4 4 6 6 3 6 6 5 1 4 3 4 2 3 4 5 3 6 2 4 5 6 2 3 4 5 6 5 1 6 2 3 3 2
+##  [38] 6 6 6 2 5 6 3 2 1 1 6 5 4 4 6 3 3 2 1 2 1 1 1 1 5 3 3 1 4 6 6 6 2 1 3 4 2
+##  [75] 5 2 6 6 4 6 6 3 4 5 1 6 5 3 1 5 3 1 3 6 4 6 6 5 1 3
+\end{verbatim}
+
+Tabla de frecuencias absolutas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(dado\_honesto)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## dado_honesto
+##  1  2  3  4  5  6 
+## 15 13 18 14 13 27
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creo el dataframe para poder trabajar con dplyr}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(dado\_honesto)),dado\_honesto)}
+\FunctionTok{names}\NormalTok{(df) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Tirada"}\NormalTok{,}\StringTok{"dado\_honesto"}\NormalTok{)}
+
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(dado\_honesto)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   dado_honesto  n
+## 1            1 15
+## 2            2 13
+## 3            3 18
+## 4            4 14
+## 5            5 13
+## 6            6 27
+\end{verbatim}
+
+Tabla de frecuencias relativas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(dado\_honesto))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## dado_honesto
+##    1    2    3    4    5    6 
+## 0.15 0.13 0.18 0.14 0.13 0.27
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{      df }\SpecialCharTok{\%\textgreater{}\%} 
+        \FunctionTok{count}\NormalTok{(dado\_honesto) }\SpecialCharTok{\%\textgreater{}\%}
+          \FunctionTok{mutate}\NormalTok{(dado\_honesto, }\AttributeTok{relFreq =} \FunctionTok{prop.table}\NormalTok{(n), }\AttributeTok{n=}\ConstantTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   dado_honesto relFreq
+## 1            1    0.15
+## 2            2    0.13
+## 3            3    0.18
+## 4            4    0.14
+## 5            5    0.13
+## 6            6    0.27
+\end{verbatim}
+
+\hypertarget{ejercicio-2.}{%
+\section{Ejercicio 2.}\label{ejercicio-2.}}
+
+\textbf{Enunciado:} A continuación crea un nuevo vector dado\_cargado de
+manera que la probabilidad de que el número elegido valga 6 sea el doble
+que la probabilidad de elegir cualquiera de los cinco números restantes.
+Lee la ayuda de sample si lo necesitas. De nuevo, haz tablas de
+frecuencias absolutas y relativas de este segundo vector.
+
+\textbf{Respuesta:} Creo el vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2021}\NormalTok{)}
+\NormalTok{(dado\_cargado }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{,}\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T, }\AttributeTok{prob =} \FunctionTok{rep}\NormalTok{( }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{7}\NormalTok{,}\DecValTok{2}\SpecialCharTok{/}\DecValTok{7}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 4 2 5 3 5 5 5 6 2 1 6 2 5 4 2 6 4 1 1 4 6 1 3 6 5 1 1 1 1 2 6 1 1 1 4 6 1
+##  [38] 6 1 4 6 2 3 1 6 2 1 6 6 2 4 5 6 4 3 6 4 3 1 2 6 4 6 3 2 6 6 5 6 6 6 5 6 1
+##  [75] 6 4 4 3 5 1 4 3 1 5 3 6 1 2 4 3 6 5 1 4 6 1 5 2 2 5
+\end{verbatim}
+
+Tabla de frecuencias absolutas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(dado\_cargado)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## dado_cargado
+##  1  2  3  4  5  6 
+## 22 13 10 15 14 26
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creo el dataframe para poder trabajar con dplyr}
+\NormalTok{df2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(dado\_cargado)),dado\_cargado)}
+\FunctionTok{names}\NormalTok{(df) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Tirada"}\NormalTok{,}\StringTok{"dado\_cargado"}\NormalTok{)}
+
+\NormalTok{df2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(dado\_cargado)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   dado_cargado  n
+## 1            1 22
+## 2            2 13
+## 3            3 10
+## 4            4 15
+## 5            5 14
+## 6            6 26
+\end{verbatim}
+
+Tabla de frecuencias relativas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(dado\_cargado))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## dado_cargado
+##    1    2    3    4    5    6 
+## 0.22 0.13 0.10 0.15 0.14 0.26
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{      df2 }\SpecialCharTok{\%\textgreater{}\%} 
+        \FunctionTok{count}\NormalTok{(dado\_cargado) }\SpecialCharTok{\%\textgreater{}\%}
+          \FunctionTok{mutate}\NormalTok{(dado\_cargado, }\AttributeTok{relFreq =} \FunctionTok{prop.table}\NormalTok{(n), }\AttributeTok{n=}\ConstantTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   dado_cargado relFreq
+## 1            1    0.22
+## 2            2    0.13
+## 3            3    0.10
+## 4            4    0.15
+## 5            5    0.14
+## 6            6    0.26
+\end{verbatim}
+
+\hypertarget{ejercicio-3.}{%
+\section{Ejercicio 3.}\label{ejercicio-3.}}
+
+\textbf{Enunciado:} Utiliza las funciones rep y seq para crear tres
+vectores v1, v2 y v3 con estos elementos respectivamente:
+
+4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1
+
+1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5
+
+1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
+
+\textbf{Respuesta:} Creo los vectores:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(v1 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{each =} \DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 4 4 4 4 3 3 3 3 2 2 2 2 1 1 1 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(v2 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{), }\AttributeTok{times =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(v3 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{times =} \DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 4 3 2 1 4 3 2 1 4 3 2 1 4 3 2 1
+\end{verbatim}
+
+\hypertarget{ejercicio-4.}{%
+\section{Ejercicio 4.}\label{ejercicio-4.}}
+
+\textbf{Enunciado:} Utilizando la tabla mpg de la librería tidyverse
+crea una tabla mpg2 que:
+
+\begin{enumerate}
+\def\labelenumi{\Roman{enumi})}
+\item
+  contenga las filas en las que la variable class toma el valor pickup.
+\item
+  y las columnas de la tabla original cuyos nombres empiezan por c.~No
+  se trata de que las selecciones a mano, por sus nombres
+\end{enumerate}
+
+\textbf{Respuesta:} Hago la selección:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mpg }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(class }\SpecialCharTok{==} \StringTok{"pickup"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"c"}\NormalTok{))  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 33 x 3
+##      cyl   cty class 
+##    <int> <int> <chr> 
+##  1     6    15 pickup
+##  2     6    14 pickup
+##  3     6    13 pickup
+##  4     6    14 pickup
+##  5     8    14 pickup
+##  6     8    14 pickup
+##  7     8     9 pickup
+##  8     8    11 pickup
+##  9     8    11 pickup
+## 10     8    12 pickup
+## # ... with 23 more rows
+\end{verbatim}
+
+\hypertarget{ejercicio-5.}{%
+\section{Ejercicio 5.}\label{ejercicio-5.}}
+
+\textbf{Enunciado:} Descarga el fichero census.dta. Averigua de qué tipo
+de fichero se trata y usa la herramienta Import DataSet del panel
+Environment de RStudio para leer con R los datos de ese fichero.
+Asegúrate de copiar en esta práctica los dos primeros comandos que
+llevan a cabo la importación (excluye el comando View) y que descubrirás
+al usar esa herramienta. Después completa los siguientes apartados con
+esos datos y usando dplyr y ggplot:
+
+\textbf{Respuesta:} Importo datos stata:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{census }\OtherTok{\textless{}{-}} \FunctionTok{read\_dta}\NormalTok{(}\StringTok{"census.dta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+¿Cuáles son las poblaciones totales de las regiones censales?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{census }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(region)}\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(pop))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 2
+##        region    Total
+##     <dbl+lbl>    <dbl>
+## 1 1 [NE]      49135283
+## 2 2 [N Cntrl] 58865670
+## 3 3 [South]   74734029
+## 4 4 [West]    43172490
+\end{verbatim}
+
+Representa esas poblaciones totales en un diagrama de barras (una barra
+por región censal).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pobl }\OtherTok{\textless{}{-}}\NormalTok{ census }\SpecialCharTok{\%\textgreater{}\%} 
+         \FunctionTok{group\_by}\NormalTok{(region)}\SpecialCharTok{\%\textgreater{}\%} 
+          \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(pop))}
+\NormalTok{pobl}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(pobl}\SpecialCharTok{$}\NormalTok{region)}
+
+\CommentTok{\# Barplot}
+\FunctionTok{ggplot}\NormalTok{(pobl, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{region, }\AttributeTok{y=}\NormalTok{Total, }\AttributeTok{fill=}\NormalTok{region)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{P00_GutierrezGarcia_Laura_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+Ordena los estados por población, de mayor a menor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Con R}
+\NormalTok{census}\SpecialCharTok{$}\NormalTok{state[}\FunctionTok{order}\NormalTok{(census}\SpecialCharTok{$}\NormalTok{pop,}\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "California"    "New York"      "Texas"         "Pennsylvania" 
+##  [5] "Illinois"      "Ohio"          "Florida"       "Michigan"     
+##  [9] "New Jersey"    "N. Carolina"   "Massachusetts" "Indiana"      
+## [13] "Georgia"       "Virginia"      "Missouri"      "Wisconsin"    
+## [17] "Tennessee"     "Maryland"      "Louisiana"     "Washington"   
+## [21] "Minnesota"     "Alabama"       "Kentucky"      "S. Carolina"  
+## [25] "Connecticut"   "Oklahoma"      "Iowa"          "Colorado"     
+## [29] "Arizona"       "Oregon"        "Mississippi"   "Kansas"       
+## [33] "Arkansas"      "W. Virginia"   "Nebraska"      "Utah"         
+## [37] "New Mexico"    "Maine"         "Hawaii"        "Rhode Island" 
+## [41] "Idaho"         "New Hampshire" "Nevada"        "Montana"      
+## [45] "S. Dakota"     "N. Dakota"     "Delaware"      "Vermont"      
+## [49] "Wyoming"       "Alaska"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Con dplyr}
+\NormalTok{census }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(state,pop) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{across}\NormalTok{(pop,desc))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50 x 2
+##    state             pop
+##    <chr>           <dbl>
+##  1 California   23667902
+##  2 New York     17558072
+##  3 Texas        14229191
+##  4 Pennsylvania 11863895
+##  5 Illinois     11426518
+##  6 Ohio         10797630
+##  7 Florida       9746324
+##  8 Michigan      9262078
+##  9 New Jersey    7364823
+## 10 N. Carolina   5881766
+## # ... with 40 more rows
+\end{verbatim}
+
+Crea una nueva variable que contenga la tasa de divorcios /matrimonios
+para cada estado y después muestro la tasa por estado.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{census }\OtherTok{\textless{}{-}}\NormalTok{ census }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tasa=}\NormalTok{ divorce}\SpecialCharTok{/}\NormalTok{marriage) }
+
+\NormalTok{census }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(state,tasa)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50 x 2
+##    state        tasa
+##    <chr>       <dbl>
+##  1 Alabama     0.546
+##  2 Alaska      0.656
+##  3 Arizona     0.659
+##  4 Arkansas    0.599
+##  5 California  0.633
+##  6 Colorado    0.532
+##  7 Connecticut 0.518
+##  8 Delaware    0.521
+##  9 Florida     0.661
+## 10 Georgia     0.492
+## # ... with 40 more rows
+\end{verbatim}
+
+Si nos preguntamos cuáles son los estados más envejecidos podemos
+responder de dos maneras. Mirando la edad mediana o mirando en qué
+estados la franja de mayor edad representa una proporción más alta de la
+población total. Haz una tabla en la que aparezcan los valores de estos
+dos criterios, ordenada según la edad mediana decreciente y muestra los
+10 primeros estados de esa tabla.
+
+En primer lugar, calculamos la proporción y la guardamos como variable.
+Posteriormente, seleccionamos las columnas de interés (estado, edad
+mediana y proporción) y las mostramos según el orden descendente para la
+variable de la edad mediana:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{census }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop65=}\NormalTok{ pop65p}\SpecialCharTok{/}\NormalTok{pop) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(state,medage,prop65) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(medage)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 3
+##    state         medage prop65
+##    <chr>          <dbl>  <dbl>
+##  1 Florida         34.7  0.173
+##  2 New Jersey      32.2  0.117
+##  3 Pennsylvania    32.1  0.129
+##  4 Connecticut     32    0.117
+##  5 New York        31.9  0.123
+##  6 Rhode Island    31.8  0.134
+##  7 Massachusetts   31.2  0.127
+##  8 Missouri        30.9  0.132
+##  9 Arkansas        30.6  0.137
+## 10 Maine           30.4  0.125
+\end{verbatim}
+
+Haz un histograma (con 10 intervalos) de los valores de la variable
+medage (edad mediana) y con la curva de densidad de la variable
+superpuesta.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(census, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ medage)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\FunctionTok{stat}\NormalTok{(density)), }
+                 \AttributeTok{bins=}\DecValTok{10}\NormalTok{, }\AttributeTok{fill =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{color=}\StringTok{"black"}\NormalTok{)  }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{color=}\StringTok{"red"}\NormalTok{, }\AttributeTok{size=}\FloatTok{1.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{P00_GutierrezGarcia_Laura_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\end{document}

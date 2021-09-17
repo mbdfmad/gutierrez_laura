@@ -3,9 +3,9 @@ title: "Práctica 0. FMAD 2021-2022"
 author: "Gutiérrez García, Laura"
 date: 'Curso 2021-22. Última actualización: `r format(Sys.time(), "%Y-%m-%d")`'
 output:
+  html_document: default
   word_document: default
   pdf_document: default
-  html_document: default
 subtitle: ICAI. Master en Big Data. Fundamentos Matemáticos del Análisis de Datos
   (FMAD).
 ---
@@ -44,6 +44,17 @@ Longitud:
 length(v)
 ```
 
+# Librerías
+
+Antes de comenzar con la práctica, cargamos todas las librerías necesarias:
+
+```{r, message=FALSE}
+library(tidyverse) # Uso de dplyr y ggplot
+library(haven) # Lectura de datos desde stata
+
+```
+
+
 # Ejercicio 1.
 
 **Enunciado:** Usando la función sample crea un vector dado_honesto con 100 números del 1 al 6.
@@ -61,7 +72,6 @@ Tabla de frecuencias absolutas
 ```{r, message=FALSE}
 table(dado_honesto)
 
-library(dplyr)
 # Creo el dataframe para poder trabajar con dplyr
 df <- data.frame(c(1:length(dado_honesto)),dado_honesto)
 names(df) <- c("Tirada","dado_honesto")
@@ -146,7 +156,6 @@ selecciones a mano, por sus nombres
 **Respuesta:**
 Hago la selección:
 ```{r, message=FALSE}
-library(tidyverse)
 mpg %>% 
   filter(class == "pickup") %>% 
   select(starts_with("c"))  
@@ -164,7 +173,6 @@ dplyr y ggplot:
 **Respuesta:**
 Importo datos stata:
 ```{r}
-library(haven)
 census <- read_dta("census.dta")
 ```
 
