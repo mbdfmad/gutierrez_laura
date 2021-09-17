@@ -4,8 +4,8 @@ author: "Gutiérrez García, Laura"
 date: 'Curso 2021-22. Última actualización: `r format(Sys.time(), "%Y-%m-%d")`'
 output:
   word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
 subtitle: Tarea 1
 ---
 
@@ -271,7 +271,8 @@ Para construir la función, primeramente se crea el vector lógico signo que alm
 Por otro lado, a la función se le incluye como argumento la generación de un vector aleatorio para que, en caso de no introducir ningún vector, se genere uno por defecto. Como resultado, la función devuelve una lista con el vector introducido (o generado) y el número de cambios de signo:
     
 ```{r}
-cambiosSigno <- function(x=sample(c(-1, 1), 9, replace = TRUE) * sample(1:20, 9, replace = TRUE)){
+cambiosSigno <- function(x=sample(c(-1, 1), 9, replace = TRUE) * 
+                           sample(1:20, 9, replace = TRUE)){
   sol <- list()
   sol$vector <- x
   signo <- x>0
@@ -290,7 +291,8 @@ cambiosSigno <- function(x=sample(c(-1, 1), 9, replace = TRUE) * sample(1:20, 9,
 Al igual que antes, la función, devuelve una lista con el vector introducido (o generado) y, en este caso, las posiciones donde se ha producido el cambio de signo:
     
 ```{r}
-cambiosSignoPos <- function(x = sample(c(-1, 1), 9, replace = TRUE) * sample(1:20, 9, replace = TRUE)){
+cambiosSignoPos <- function(x = sample(c(-1, 1), 9, replace = TRUE) * 
+                              sample(1:20, 9, replace = TRUE)){
   sol <- list()
   sol$vector <- x
   signo <- x>0
@@ -300,7 +302,7 @@ cambiosSignoPos <- function(x = sample(c(-1, 1), 9, replace = TRUE) * sample(1:2
 }
 ```
     
-    También se valorará que incluyas en el código como usar `sample` para generar vectores aleatorios de 20 enteros *no nulos* (el vector debe poder tomar valores positivos y negativos).
+También se valorará que incluyas en el código como usar `sample` para generar vectores aleatorios de 20 enteros *no nulos* (el vector debe poder tomar valores positivos y negativos).
     
 Para comprobar el funcionamiento de las funciones se emplea el vector del ejemplo y se llama a la función sin argumento:
 
@@ -418,7 +420,7 @@ filter(flights, dep_delay >= 60, dep_delay - arr_delay > 30)
 
 7) Departed between midnight and 6am (inclusive)
 
-En primer lugar, vemos qué pinta tiene la variable dep_time para poder analizar de un modo correcto sus valores:
+En primer lugar, vemos un resumen de la variable dep_time para poder analizar de un modo correcto sus valores:
 
 ```{r}
 summary(flights$dep_time)
