@@ -4,8 +4,8 @@ author: "Gutiérrez García, Laura"
 date: 'Curso 2021-22. Última actualización: `r format(Sys.time(), "%Y-%m-%d")`'
 output:
   word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
 subtitle: Tarea 2
 ---
 
@@ -211,7 +211,7 @@ $E(X_1 + X_2) = E(X_1) + E(X_2)$
 sum(table2$Z*table2$p) 
 
 ```
-Simular cien mil valores variable suma: como son independientes, se simula cada variable aleatoria por separado y se calcula su media
+Simular cien mil valores variable suma: como son independientes, se simula cada variable aleatoria por separado y se calcula su media con un tamaño de muestra n = 1
 
 
 ```{r}
@@ -366,7 +366,9 @@ ggplot(data = diamonds) +
   geom_boxplot(mapping = aes(x = cut, y = price, fill = cut))
 ```
 
-En el corte, existe una gran variabilidad dentro de cada una de las categorías pero muy poca entre ellas.
+En el corte, existe una gran variabilidad en el precio dentro de cada una de las categorías pero muy poca entre ellas. Por ese motivo, esta variable no resulta muy determinante para su predicción.
+
+No obstante, llama la atención como la mediana para la categoría de peor corte es más alta que para las demás. 
 
 + Color:
 
@@ -384,7 +386,7 @@ ggplot(data = diamonds) +
   geom_boxplot(mapping = aes(x = clarity, y = price, fill = clarity))
 ```
 
-En la limpieza, la variabilildad del precio parece ser mayor para los que menos limpios son, no obstante, en todas las categorías la variabilidad es bastante amplia.
+En la limpieza, la variabilildad del precio parece ser mayor para los que son menos limpios, no obstante, en todas las categorías la variabilidad es bastante amplia.
 
 
 Respondiendo a la pregunta del ejercicio, la variable "carat" es la que parece predecir mejor el precio del diamante.
@@ -492,7 +494,7 @@ who %>%
 
 ```
 
-Con este gráfico vemos la evolución a lo largo de los años para todos los países y según el sexo. Sin embargo, cuesta diferenciar cuál es la línea correspondiente a cada país. Por este motivo, podemos hacer un gráfico para cada territorio pero previamente a esta representación, se van a seleccionar los países con un número de casos mayor a la media :
+Con este gráfico vemos la evolución a lo largo de los años para todos los países y según el sexo. Sin embargo, cuesta diferenciar cuál es la línea correspondiente a cada país. Por este motivo, podemos hacer un gráfico para cada territorio pero previamente a esta representación, se van a seleccionar los países con un número de casos mayor a 500000 :
 
 
 ```{r, message=FALSE}
@@ -502,7 +504,7 @@ tabla <- who %>%
           group_by(country) %>%
           summarise(cases = sum(cases)) %>% 
           arrange(cases) %>% 
-          filter(cases > mean(cases))
+          filter(cases > 500000)
 
 
 
@@ -512,10 +514,12 @@ tabla <- who %>%
   summarise(cases = sum(cases)) %>%
   ggplot(aes(x = year, y = cases, group = sex, colour = sex)) +
   geom_line()+
-  facet_wrap(~country) +
+  facet_wrap(~country, scales = 'free_y') +
   theme(axis.text.x = element_text(size= rel(0.6)))
 
 ```
+
+Para cada país se representan las dos categorías de la variable sexo y teniendo en cuenta su propia escala para realizar un análisis de forma individualizada. Si quisiéramos realizar una comparación en conjunto, sería conveniente establecer la misma escala para todos.
 
 
 
