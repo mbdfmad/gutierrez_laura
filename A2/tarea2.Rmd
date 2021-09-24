@@ -1,0 +1,526 @@
+---
+title: "Master en Big Data. Fundamentos Matemáticos del Análisis de Datos (FMAD)."
+author: "Gutiérrez García, Laura"
+date: 'Curso 2021-22. Última actualización: `r format(Sys.time(), "%Y-%m-%d")`'
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+subtitle: Tarea 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instrucciones preliminares
+
++ Empieza abriendo el proyecto de RStudio correspondiente a tu repositorio personal de la asignatura. 
+
++ En todas las tareas tendrás que repetir un proceso como el descrito en la sección *Repite los pasos Creando un fichero Rmarkdown para esta práctica* de la *Práctica00*. Puedes releer la sección *Practicando la entrega de las Tareas* de esa misma práctica para recordar el procedimiento de entrega.
+
+# Librerías
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+
+# Ejercicio 1. Simulando variables aleatorias discretas.
+
+**Apartado 1:** La variable aleatoria discreta $X_1$ tiene esta tabla de densidad de probabilidad (es la variable que se usa como ejemplo en la Sesión ):
+$$
+\begin{array}{|c|c|c|c|c|c|c|}
+\hline
+\text{valor de }X_1 & 0 & 1 & 2 & 3 \\
+\hline
+\text{Probabilidad de ese valor }P(X = x_i) & \dfrac{64}{125} &
+\dfrac{48}{125}& \dfrac{12}{125} & \dfrac{1}{125}\rule{0mm}{6mm} \\[3mm]
+\hline
+\end{array}
+$$
+Calcula la media y la varianza teóricas de esta variable.
+
+**Respuesta:**
+
+La media teórica se calcula a partir de la tabla de probabilidades:
+
+$$
+\bar x = 
+x_1 p_1 + \cdots + x_k p_k
+$$
+Y para la varianza teórica:
+$$
+\sigma^2 = (x_1 - \mu)^2 p_1 + \cdots + (x_k - \mu)^2 p_k
+$$
+
+Almacenamos en dos vectores los valores correspondientes a la variable $X_1$ y sus probabilidades y se calculan la media y la varianza teóricas sustituyendo en las fórmulas anteriores:
+
+```{r}
+(X1 <- c(0:3))
+(p <- c(64/125, 48/125, 12/125, 1/125))
+
+(mu <- sum(X1*p)) # media teórica
+
+(sigma2 <- sum((X1-mu)^2*p)) # varianza teórica
+
+```
+
+
+**Apartado 2:**  Combina `sample` con `replicate` para simular cien mil muestras de tamaño 10 de esta variable $X_1$. Estudia la distribución de las medias muestrales como hemos hecho en ejemplos previos, ilustrando con gráficas la distribución de esas medias muestrales. Cambia después el tamaño de la muestra a 30 y repite el análisis. 
+
+**Respuesta:**
+
+Generación de cien mil muestras de tamaño 10 calculando su media:
+
+```{r}
+set.seed(2021)
+k = 100000 # nº muestras
+n = 10 # tamaño de cada muestra
+mediasMuestrales = replicate(k, {
+muestra = sample(0:3, size = n, replace = TRUE, prob = c(64, 48, 12, 1))
+mean(muestra)
+})
+
+head(mediasMuestrales, 10) # 10 primeras medias muestrales
+
+```
+Representación mediante un histograma de la distribución de medias junto con la media teórica presentada mediante línea discontinua:
+
+```{r}
+# Histograma con densidad
+mediasMuestrales_df <-  as.data.frame(mediasMuestrales)
+g1 <- ggplot(mediasMuestrales_df, aes(x = mediasMuestrales)) +
+  geom_histogram(binwidth=0.1,aes(y = ..density.., fill=..count..),
+                 colour = 1) +
+  geom_vline(aes(xintercept = mean(mediasMuestrales)), colour = "green", size = 1)+
+  geom_vline(aes(xintercept = mu), linetype = "dashed", colour = "red", size = 1)+
+  geom_density(adjust = 4) # adjust suaviza la línea de densidad
+
+g1+
+  theme (text = element_text(size=10)) + # Tamaño de fuente del grafico por defecto
+  ggtitle ("Histograma medias muestrales de tamaño n = 10")  # Título del gráfico
+
+
+```
+
+En el histograma se representa la distribución de las medias muestrales y, se puede ver como la mayoría de medias se concentra muy próxima a la media teórica. Además, si simultáneamente se dibuja la línea con la media de las medias, ésta se posiciona encima de la teórica coincidiendo con ella.
+
+Si cambiamos el tamaño de la muestra a 30:
+
+```{r}
+set.seed(2021)
+k = 100000 # nº muestras
+mediasMuestrales30 = replicate(k, {
+muestra = sample(0:3, size = 30, replace = TRUE, prob = c(64, 48, 12, 1))
+mean(muestra)
+})
+
+head(mediasMuestrales30, 10) # 10 primeras medias muestrales
+
+mediasMuestrales_df <- as.data.frame(mediasMuestrales30)
+
+g2 <- ggplot(mediasMuestrales_df, aes(x = mediasMuestrales30)) +
+  geom_histogram(binwidth=0.1,aes(y = ..density.., fill=..count..),
+                 colour = 1) +
+    geom_vline(aes(xintercept = mean(mediasMuestrales30)), colour = "green", size = 1)+
+  geom_vline(aes(xintercept = mu), linetype = "dashed", colour = "red", size = 1)+
+  geom_density(adjust = 4) # adjust suaviza la línea de densidad
+
+g2+
+  theme (text = element_text(size=10)) + # Tamaño de fuente del grafico por defecto
+  ggtitle ("Histograma medias muestrales de tamaño n = 30")  # Título del gráfico
+
+
+```
+
+Con cien mil muestras de tamaño 30, el rango para los valores de las medias se ha hecho más estrecho y, al igual que ocurría con tamaño 10, la media de las medias de las muestras coincide con la media teórica.
+
+
+**Apartado 3:** La variable aleatoria discreta $X_2$ tiene esta tabla de densidad de probabilidad:
+$$
+\begin{array}{|c|c|c|c|c|c|}
+\hline
+\text{valor de }X_2 & 0 & 1 & 2 \\
+\hline
+\text{Probabilidad de ese valor }P(X = x_i) & \dfrac{1}{2} &
+\dfrac{1}{4}&  \dfrac{1}{4}\rule{0mm}{6mm} \\[3mm]
+\hline
+\end{array}
+$$
+Suponemos que $X_1$ y $X_2$ son independientes. ¿Qué valores puede tomar la suma $X1 + X2$? ¿Cuál es su tabla de probabilidad?
+
+**Respuesta:**
+
+Creamos una variable $Z = X_1 + X_2$ y calculamos sus probabilidades asociadas que, dado que son independientes, el resultado es el producto es decir:
+$f(x_1, x_2) = f_1(x_1) * f_2(x_2)$
+
+```{r}
+# Vector de probabilidades para cada combinación posible
+(p <- c(64/125, 48/125, 12/125, 1/125) * rep(c(1/2, 1/4, 1/4), each = 4))
+
+X1 <- rep(0:3,3)
+X2 <- rep(0:2, each = 4)
+
+# Tabla de probabilidad
+(table <- data.frame(Z=X1 + X2, X1, X2, p))
+
+# Tabla de probabilidad de la variable suma
+(table2 <- table %>% 
+  group_by(Z) %>% 
+  summarise(p = sum(p)))
+
+
+```
+
+La variable suma designada como Z puede tomar 6 posibles valores (del 0 al 5) y sus probabilidades se calculan en función de la probabilidad obtenida para cada combinación. Por ejemplo:
+$P(Z = 1) = P(X_1 = 0, X_2 = 1) + P(X_1 = 1, X_2 = 0)$
+
+Así también podríamos ver que la suma de las probabilidades para esta nueva variable cumple el axioma sumando 1:
+
+```{r}
+
+sum(table2$p)
+
+```
+
+**Apartado 4:** Calcula la media teórica de la suma $X_1 + X_2$. Después usa `sample` y `replicate` para simular cien mil *valores* de esta variable suma. Calcula la media de esos valores. *Advertencia:* no es el mismo tipo de análisis que hemos hecho en el segundo apartado. 
+
+**Respuesta:**
+
+Para calcular la media teórica de las suma, sabemos que:
+$E(X_1 + X_2) = E(X_1) + E(X_2)$
+
+```{r}
+
+# Variable X1
+(X1 <- c(0:3))
+# Probabilidades para X1
+(p <- c(64/125, 48/125, 12/125, 1/125))
+
+# Variable X2
+(X2 <- c(0:2))
+# Probabilidades para X2
+(p2 <- c(1/2, 1/4, 1/4))
+
+# Media teórica variable Z = X1 + X2
+# Forma 1: a partir de las medias de las variables aleatorias
+(mu_z <- sum(X1*p) + sum(X2*p2))
+
+# Forma 2: a partir de la nueva variable
+sum(table2$Z*table2$p) 
+
+```
+Simular cien mil valores variable suma: como son independientes, se simula cada variable aleatoria por separado y se calcula su media
+
+
+```{r}
+set.seed(2021)
+k = 100000 # nº muestras
+mediasMuestrales = replicate(k, {
+X1 = sample(0:3, size = 1, replace = TRUE, prob = c(64, 48, 12, 1))
+X2 = sample(0:2, size = 1, replace = TRUE, prob = c(1/2, 1/4, 1/4))
+mean(X1)+mean(X2)
+})
+
+```
+
+O bien se toman muestras de tamaño 1 para la nueva variable Z:
+
+```{r}
+
+set.seed(2021)
+k = 100000 # nº muestras
+mediasMuestrales_Z = replicate(k, {
+Z = sample(0:5, size = 1, replace = TRUE, prob =table2$p)
+mean(Z)
+})
+
+```
+
+Si comparamos los tres resultados, vemos que son similares:
+
+```{r}
+tibble( medias_Z = mean(mediasMuestrales_Z),
+medias_X1_X2 = mean(mediasMuestrales),
+mu_z = mu_z)
+```
+
+
+
+# Ejercicio 2. Datos limpios
+
++ Descarga el fichero de este enlace  
+
+[https://gist.githubusercontent.com/fernandosansegundo/471b4887737cfcec7e9cf28631f2e21e/raw/b3944599d02df494f5903740db5acac9da35bc6f/testResults.csv](https://gist.githubusercontent.com/fernandosansegundo/471b4887737cfcec7e9cf28631f2e21e/raw/b3944599d02df494f5903740db5acac9da35bc6f/testResults.csv) 
+
++ Este fichero contiene las notas de los alumnos de una clase, que hicieron dos tests cada semana durante cinco semanas. La tabla de datos no cumple los principios de *tidy data* que hemos visto en clase. Tu tarea en este ejercicio es explicar por qué no se cumplen y obtener una tabla de datos limpios con la misma información usando *tidyR*.  
+**Indicación:** lee la ayuda de la función `separate` de *tidyR*.
+
+**Respuesta:**
+
+En primer lugar, leemos los datos, vemos sus 6 primeras líneas y el nombre de cada una de las variables:
+
+```{r}
+testResults <- read_csv("./data/testResults.csv")
+head(testResults)
+names(testResults)
+
+```
+
+Este conjunto de datos se comopone de un total de 9 columnas, sin embargo, una de las razones por las que este dataset no cumple los principios de tidy data es la combinación de las variables sexo y edad en una sola columna llamada "gender_age".
+Por ese motivo, primeramente, separamos en dos dicha columna:
+
+```{r}
+testResults <- testResults %>% separate (gender_age, c("gender", "age"))
+
+testResults$gender <- as.factor(testResults$gender) # convertimos sexo en factor
+testResults$age <- as.numeric(testResults$age) # convertimos edad en numérico
+head(testResults)
+
+```
+
+El segundo motivo por el que testResults no es tidy data es debido a la variable "week". Cada semana, los alumnos realizaron dos tipos de test pero en lugar de tener una variable que recoja la semana en la que se ha hecho la prueba y otra variable con la puntuación obtenida, nos encontramos con 5 columnas correspondientes a la puntuación de los test en cada semana.
+Así, se realiza el cambio de formato ancho a longitudinal y, además, se convierte la variable week en numérico para poder tratar dicha variable como factor o numérica según el objetivo de estudio que se plantee:
+
+```{r}
+
+testResults_Tidy = testResults %>%
+    pivot_longer(week1:week5, names_to = "week") %>% 
+   separate(week, c("aux", "week"),convert=TRUE, sep = 4) %>% 
+   select(-aux)
+   
+
+head(testResults_Tidy)
+
+```
+
+
+
+# Ejercicio 3. Lectura de R4DS.
+
+Continuando con nuestra *lectura conjunta* de este libro, si revisas el índice verás que hemos cubierto (holgadamente en algún caso) el contenido de los Capítulos 6, 8, 9, 10 y 11. Todos esos Capítulos son relativamente ligeros.  Por eso esta semana conviene detenerse un poco en la lectura de los Capítulos 7 y 12, que son los más densos en información. Y como motivación os proponemos un par de ejercicios, uno por cada uno de esos capítulos. 
+
++ Haz el [ejercicio 2 de la Sección 7.5.1.1 de R4DS](https://r4ds.had.co.nz/exploratory-data-analysis.html#exercises-17). Las ideas de esa sección son importantes para nuestro trabajo de las próximas sesiones.
+
+**Respuesta:**
+
+Leemos el enunciado: What variable in the diamonds dataset is most important for predicting the price of a diamond? How is that variable correlated with cut? Why does the combination of those two relationships lead to lower quality diamonds being more expensive?
+
+Cargamos en memoria el dataset:
+
+```{r}
+
+data("diamonds")
+head(diamonds)
+dim(diamonds)
+
+```
+
+Las variables a estudiar en este análisis son: carat (quilates del diamante), cut (calidad del corte), color (color del diamante), clarity (cómo de limpio está el diamante), depth (porcentaje de profundidad teniendo en cuenta la longitud x, la anchura y y la profundidad z), table (anchura de la parte superior del diamente desde su punto más ancho).
+Las variables x, y, z, al estar incluidas dentro de depth se omiten.
+
+De las variables mencionadas anteriormente, carat y depth son variables continuas, por tanto, como la variable respuesta (price) también lo es, se realiza un gráfico de dispersión para analizar su tendencia:
+
++ Carat:
+
+```{r}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(colour = "lightblue")
+```
+
+Para los quilates del diamante vemos que, a medida que aumenta la cifra para esta variable, también lo hace el precio.
+
+Además, si calculamos la correlación de pearson entre estas dos variables, su valor es bastante próximo a 1 y positivo, lo que quiere decir que, a más quilates mayor precio.
+
+```{r}
+cor(diamonds$carat,diamonds$price)
+```
+
+
++ Depth:
+
+```{r}
+ggplot(diamonds, aes(x = depth, y = price)) +
+  geom_point(colour = "pink")
+```
+
+En el diagrama de dispersión, se aprecia que dentro del rango de la profundidad, la variabilidad de los precios es muy amplia variando desde los más bajos a los más altos por lo que no sería un buen predictor del precio.
+
++ Table:
+
+```{r}
+ggplot(diamonds, aes(x = table, y = price)) +
+  geom_point(colour = "green")
+```
+
+Para la variable table, no parece existir relación con el precio puesto que no se observa ninguna tendencia en el diagrama de dispersión.
+
+
+Y para las variables categóricas, se representan los boxplots:
+
++ Cut:
+
+```{r}
+ggplot(data = diamonds) +
+  geom_boxplot(mapping = aes(x = cut, y = price, fill = cut))
+```
+
+En el corte, existe una gran variabilidad dentro de cada una de las categorías pero muy poca entre ellas.
+
++ Color:
+
+```{r}
+ggplot(data = diamonds) +
+  geom_boxplot(mapping = aes(x = color, y = price, fill = color))
+```
+
+En el color, aunque la variabilidad es bastante elevada en todas las categorías, se puede observar cierta tendencia: cuanto peor es (J), mayor variabilidad hay.
+
++ Clarity:
+
+```{r}
+ggplot(data = diamonds) +
+  geom_boxplot(mapping = aes(x = clarity, y = price, fill = clarity))
+```
+
+En la limpieza, la variabilildad del precio parece ser mayor para los que menos limpios son, no obstante, en todas las categorías la variabilidad es bastante amplia.
+
+
+Respondiendo a la pregunta del ejercicio, la variable "carat" es la que parece predecir mejor el precio del diamante.
+Continuando con la siguieste cuestión, estudiamos la relación de esta variable con el corte ("cut").
+
+
+Relación de carat con cut:
+
+
+```{r}
+ggplot(data = diamonds) +
+  geom_boxplot(mapping = aes(x = cut, y = carat, fill = cut))
+```
+
+Mediante este boxplot se observa que para el peso del diamante existe una gran variabilidad dentro de cada categoría del corte. Además, fijándonos en la primera categoría (Fair) esta alcanza valores ligeramente más elevados que las otras, por lo que, respondiendo a la última pregunta, como para la categoría Fair se alcanzan valores más altos para carat, esto implicaría también un precio más alto (según lo observado en el diagrama de dispersión de carat con price).
+
++ Haz el [ejercicio 4 de la Sección 12.6.1 de R4DS](https://r4ds.had.co.nz/tidy-data.html#exercises-27). ¡Aprovecha el código previo de esa sección para trabajar con datos limpios!
+
+**Respuesta:**
+
+For each country, year, and sex compute the total number of cases of TB. Make an informative visualisation of the data.
+
+Para este apartado, se emplea la base de datos who, la cual contiene información sobre casos de tuberculosis
+
+```{r}
+data(who) # cargamos en memoria el dataset
+head(who) # 6 primeras filas
+```
+Seguimos los pasos del capítulo para convertir el dataset en tidy data:
+
++ Las variables desde new_sp_m014 a newrel_f65 serán transformadas a un formato longitudinal, omitiendo los valores missing y denotando a esa nueva variable como key
+
++ Separamos la columna key
+
++ Eliminamos columnas redundantes y separamos la columna sex_age en dos
+
+```{r}
+who <- who %>%
+  pivot_longer(
+    cols = new_sp_m014:newrel_f65, 
+    names_to = "key", 
+    values_to = "cases", 
+    values_drop_na = TRUE
+  ) %>% 
+  mutate(
+    key = stringr::str_replace(key, "newrel", "new_rel")
+  ) %>%
+  separate(key, c("new", "var", "sexage")) %>% 
+  select(-new, -iso2, -iso3) %>% 
+  separate(sexage, c("sex", "age"), sep = 1)
+
+head(who)
+```
+
+Calculamos el nº total de casos de tuberculosis por país, año y sexo:
+
++ Representación mediante tabla: 
+
+```{r}
+who %>%
+  group_by(country, year, sex) %>%
+  summarise(cases = sum(cases))
+
+```
+
+Representación mediante gráfico de espaguetis:
+
+```{r, message=FALSE}
+
+who %>%
+  group_by(country, year, sex) %>%
+  summarise(cases = sum(cases)) %>%
+  unite(country_sex, country, sex, remove = FALSE) %>%
+  ggplot(aes(x = year, y = cases, group = country_sex, colour = sex)) +
+  geom_line()
+
+```
+
+
+El nº de casos hasta 1995 era muy bajo en comparación a los demás años y lo mismo ocurre con algunos países:
+```{r}
+
+who %>%
+  group_by(year) %>%
+  summarise(cases = sum(cases))
+
+
+who %>%
+  group_by(country) %>%
+  summarise(cases = sum(cases)) %>% 
+  arrange(cases)
+
+```
+
+Por eso, para una mejor visualización, representamos los años a partir de 1995:
+
+```{r, message=FALSE}
+who %>%
+  group_by(country, year, sex) %>%
+  filter(year>1995) %>% 
+  summarise(cases = sum(cases)) %>%
+  unite(country_sex, country, sex, remove = FALSE) %>%
+  ggplot(aes(x = year, y = cases, group = country_sex, colour = sex)) +
+  geom_line()
+
+```
+
+Con este gráfico vemos la evolución a lo largo de los años para todos los países y según el sexo. Sin embargo, cuesta diferenciar cuál es la línea correspondiente a cada país. Por este motivo, podemos hacer un gráfico para cada territorio pero previamente a esta representación, se van a seleccionar los países con un número de casos mayor a la media :
+
+
+```{r, message=FALSE}
+
+# Creamos una tabla con los países que tienen un nº de casos mayor a la media
+tabla <- who %>%
+          group_by(country) %>%
+          summarise(cases = sum(cases)) %>% 
+          arrange(cases) %>% 
+          filter(cases > mean(cases))
+
+
+
+  who %>%
+  group_by(country, year, sex) %>%
+  filter(year>1995 & country %in% tabla$country) %>% 
+  summarise(cases = sum(cases)) %>%
+  ggplot(aes(x = year, y = cases, group = sex, colour = sex)) +
+  geom_line()+
+  facet_wrap(~country) +
+  theme(axis.text.x = element_text(size= rel(0.6)))
+
+```
+
+
+
+
+
+
+
+
